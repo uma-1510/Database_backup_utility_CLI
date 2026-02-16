@@ -1,0 +1,48 @@
+
+
+{
+  "database": {
+    "sqlite": {
+      "path": "test.db"
+    },
+
+    "mysql": {
+      "host": "localhost",
+      "port": 3306,
+      "user": "root",
+      "password": "password",
+      "database": "testdb"
+    },
+
+    "postgresql": {
+      "host": "localhost",
+      "port": 5432,
+      "user": "postgres",
+      "password": "password",
+      "database": "testdb"
+    },
+
+    "mongodb": {
+      "uri": "mongodb://localhost:27017",
+      "database": "testdb"
+    }
+  },
+
+  "storage": {
+    "s3": {
+      "access_key": "",
+      "secret_key": "",
+      "bucket": ""
+    },
+    "gcs": {
+      "service_account_key": ""
+    },
+    "azure": {
+      "connection_string": ""
+    }
+  },
+
+  "notifications": {
+    "slack_webhook": ""
+  }
+}

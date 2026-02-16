@@ -1,0 +1,6 @@
+prometheus-client 
+psycopg2-binary 
+pymongo 
+boto3 
+google-cloud-storage 
+azure-storage-blob

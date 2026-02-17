@@ -1,3 +1,4 @@
+from pathlib import Path
 from core.backup_service import BackupService
 from adapters.databases.mysql_adapter import MySQLAdapter
 from adapters.databases.sqlite_adapter import SQLiteAdapter
@@ -14,6 +15,7 @@ from logging_config.logger import setup_logger
 def main():
     parser = build_parser()
     args = parser.parse_args()
+    args.output = Path(args.output)
 
     # print(args)
 
@@ -23,7 +25,7 @@ def main():
 
     # Select DB adapter dynamically
     if args.db_type == "sqlite":
-        db_adapter = SQLiteAdapter(args.output)
+        db_adapter = SQLiteAdapter(config["database"]["sqlite"])
     elif args.db_type == "mysql":
         db_adapter = MySQLAdapter(config["database"]["mysql"])
     elif args.db_type == "postgresql":

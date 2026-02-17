@@ -4,11 +4,13 @@ from core.interfaces import DatabaseInterface
 
 
 class SQLiteAdapter(DatabaseInterface):
-    def __init__(self, config: dict):
-        self.host = config["database"]["sqlite"]
+    def __init__(self, config):
+        self.db_path = config.get("path")
+        if not self.db_path:
+            raise ValueError("SQLite config requires 'path'")
 
     def backup(self, output_file: Path):
-        conn = sqlite3.connect(self.host)
+        conn = sqlite3.connect(self.db_path)
         with open(output_file, "w") as f:
             for line in conn.iterdump():
                 f.write(f"{line}\n")

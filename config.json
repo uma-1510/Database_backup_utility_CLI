@@ -5,13 +5,13 @@
     "sqlite": {
       "path": "test.db"
     },
-
-    "mysql": {
-      "host": "localhost",
-      "port": 3306,
-      "user": "root",
-      "password": "password",
-      "database": "testdb"
+  
+  "mysql": {
+  "host": "localhost",
+  "port": 3306,
+  "user": "root",
+  "password": "",
+  "database": "testdb"
     },
 
     "postgresql": {

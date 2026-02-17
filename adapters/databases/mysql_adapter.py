@@ -1,31 +1,51 @@
 import subprocess
+from pathlib import Path
 from core.interfaces import DatabaseInterface
 
 
 class MySQLAdapter(DatabaseInterface):
 
-    def backup(self, db_name, config, output_file):
+    def __init__(self, config: dict):
+        self.host = config["host"]
+        self.port = config["port"]
+        self.user = config["user"]
+        self.password = config["password"]
+        self.database = config["database"]
+
+    def backup(self, output_file: Path):
+
         command = [
             "mysqldump",
-            "-u", config['user'],
-            f"-p{config['password']}",
-            db_name
+            "-h", self.host,
+            "-P", str(self.port),
+            "-u", self.user,
+            self.database
         ]
 
-        with open(output_file, 'w') as f:
-            subprocess.run(command, stdout=f, check=True)
-        
-        print(f"Backing up from {db_name} to {output_file}")
+        env = None
+        if self.password:
+            import os
+            env = os.environ.copy()
+            env["MYSQL_PWD"] = self.password   # ✅ safer than -p
+
+        with open(output_file, "w") as f:
+            subprocess.run(command, stdout=f, check=True, env=env)
 
         return output_file
 
-    def restore(self, backup_file, config):
+    def restore(self, backup_file: Path):
+
         command = [
             "mysql",
-            "-u", config['user'],
-            f"-p{config['password']}",
-            config['database']
+            "-h", self.host,
+            "-P", str(self.port),
+            "-u", self.user,
+            self.database
         ]
 
-        with open(backup_file, 'r') as f:
-            subprocess.run(command, stdin=f, check=True)
+        import os
+        env = os.environ.copy()
+        env["MYSQL_PWD"] = self.password
+
+        with open(backup_file, "r") as f:
+            subprocess.run(command, stdin=f, check=True, env=env)

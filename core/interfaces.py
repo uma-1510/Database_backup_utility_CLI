@@ -8,12 +8,13 @@ class DatabaseInterface(ABC):
         self.db_path = db_path
 
     @abstractmethod
-    def backup(self, db_name: str, config: dict, output_file: Path):
+    def backup(self, output_file):
         pass
 
     @abstractmethod
-    def restore(self, backup_file: Path, config: dict):
+    def restore(self, backup_file):
         pass
+
 
 class CompressionInterface(ABC):
 
